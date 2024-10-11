@@ -38,9 +38,9 @@ CLASS lhc_Movie IMPLEMENTATION.
 
       MODIFY ENTITY IN LOCAL MODE z00_r_movie
              CREATE BY \_Ratings
-             FIELDS ( Rating RatingDate UserName RatingUuid MovieUuid )
-             WITH VALUE #( ( %cid_ref = key-%cid_ref
-                             %target = VALUE #( ( %cid       = '1'
+             FIELDS ( Rating RatingDate UserName MovieUuid )
+             WITH VALUE #( ( %tky    = key-%tky
+                             %target = VALUE #( ( %cid       = 'X'
                                                   MovieUuid  = rating-MovieUuid
                                                   Rating     = rating-Rating
                                                   RatingDate = rating-RatingDate
