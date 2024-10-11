@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+
+define behavior for Z00_C_Movie //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Ratings { }
+
+  use action RateMovie;
+}
+
+define behavior for Z00_C_Rating //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _Movie;
+}

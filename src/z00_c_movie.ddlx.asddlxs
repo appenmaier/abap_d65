@@ -1,0 +1,68 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeNamePlural: 'Movies',
+  typeName: 'Movie',
+  title.value: 'Title',
+  description.value: 'PublishingYear',
+  imageUrl: 'ImageUrl'
+}
+@UI.presentationVariant: [{ sortOrder: [{ by: 'AverageRating', direction: #DESC }] }]
+annotate entity Z00_C_Movie with
+{
+  /* Actions */
+  @UI.identification: [{ position: 10, type: #FOR_ACTION, label: 'Rate Movie', dataAction: 'RateMovie' }]
+
+  /* Facets */
+  @UI.facet: [
+    { position: 10, type: #FIELDGROUP_REFERENCE, label: 'Movie Details', targetQualifier: 'Details' },
+    { position: 20, type: #FIELDGROUP_REFERENCE, label: 'Administrative Data', targetQualifier: 'Admin' },
+    { position: 15, type: #LINEITEM_REFERENCE, label: 'Ratings', targetElement: '_Ratings' }
+  ]
+
+  /* Fields */
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Admin' }]
+  MovieUuid;
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Details' }]
+  Title;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Details' }]
+  Genre;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Details' }]
+  PublishingYear;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.selectionField: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Details' }]
+  RuntimeInMin;
+
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Details' }]
+  @UI.lineItem: [{ position: 5 }]
+  ImageUrl;
+
+  @UI.fieldGroup: [{ position: 10, qualifier: 'Admin' }]
+  CreatedAt;
+
+  @UI.fieldGroup: [{ position: 20, qualifier: 'Admin' }]
+  CreatedBy;
+
+  @UI.fieldGroup: [{ position: 30, qualifier: 'Admin' }]
+  LastChangedAt;
+
+  @UI.fieldGroup: [{ position: 40, qualifier: 'Admin' }]
+  LastChangedBy;
+
+  @UI.lineItem: [{ position: 50, criticality: 'AverageRatingCriticality', criticalityRepresentation: #WITHOUT_ICON }]
+  @UI.fieldGroup: [{ position: 50, qualifier: 'Details', criticality: 'AverageRatingCriticality', criticalityRepresentation: #WITHOUT_ICON }]
+  AverageRating;
+
+  @UI.hidden: true
+  AverageRatingCriticality;
+
+}

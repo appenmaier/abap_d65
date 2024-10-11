@@ -1,0 +1,61 @@
+managed implementation in class zbp_00_r_movie unique;
+strict ( 2 );
+
+/* Root Node Movie */
+define behavior for Z00_R_Movie alias Movie
+persistent table zabap_movie_a
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _Ratings { create; }
+
+  action RateMovie parameter Z00_A_Rating result [1] $self;
+
+  field ( readonly, numbering : managed ) MovieUuid;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+  field ( mandatory : create ) Title, Genre, PublishingYear, RuntimeInMin;
+  field ( readonly : update ) Title, Genre, PublishingYear, RuntimeInMin;
+
+  mapping for zabap_movie_a corresponding
+    {
+      CreatedAt      = created_at;
+      CreatedBy      = created_by;
+      ImageUrl       = image_url;
+      LastChangedAt  = last_changed_at;
+      LastChangedBy  = last_changed_by;
+      MovieUuid      = movie_uuid;
+      PublishingYear = publishing_year;
+      RuntimeInMin   = runtime_in_min;
+    }
+
+}
+
+/* Child Node Rating */
+define behavior for Z00_R_Rating alias Rating
+persistent table zabap_rating_a
+lock dependent by _Movie
+authorization dependent by _Movie
+//etag master <field_name>
+{
+  update;
+  delete;
+  association _Movie;
+
+  field ( readonly, numbering : managed ) RatingUuid;
+  field ( readonly ) MovieUuid;
+  field ( mandatory : create ) UserName, Rating, RatingDate;
+  field ( readonly : update ) UserName, Rating, RatingDate;
+
+  mapping for zabap_rating_a corresponding
+    {
+      MovieUuid  = movie_uuid;
+      RatingDate = rating_date;
+      RatingUuid = rating_uuid;
+      UserName   = user_name;
+    }
+
+}
